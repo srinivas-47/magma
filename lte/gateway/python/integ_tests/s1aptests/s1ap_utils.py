@@ -21,7 +21,8 @@ import time
 from enum import Enum
 from queue import Queue
 from typing import Optional
-
+import random
+from datetime import datetime
 import grpc
 import subprocess
 
@@ -61,7 +62,7 @@ from lte.protos.ha_service_pb2 import (
     EnbOffloadType,
 )
 DEFAULT_GRPC_TIMEOUT = 10
-
+random.seed(datetime.now())
 
 class S1ApUtil(object):
     """
@@ -545,7 +546,9 @@ class SubscriberUtil(object):
         """
         Generate the sid based on index offset and prefix
         """
-        idx = str(self._sid_idx)
+        print("-------------------NEW RANDOM SID GENERATOR")
+        #idx = str(self._sid_idx)
+        idx = str(random.randint(1, 99999999))
         # Find the 0 padding we need to add
         padding = self.IMSI_LEN - len(idx) - len(self.SID_PREFIX[4:])
         sid = self.SID_PREFIX + "0" * padding + idx
